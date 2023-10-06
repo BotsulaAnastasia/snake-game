@@ -1,25 +1,24 @@
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
-const canvasWidth = 500;
-const canvasHeight = 500;
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
+const rectWidth = 20;
+const rectHeight = 20;
 
 // Draw a grid on the field
-for (let x = 0; x < 500; x += 20) {
-    context.moveTo(x, 0);
-    context.lineTo(x, 500);
-    context.fillStyle = '#716241';
-    context.fillRect(x, 0, 20, 20);
-    context.fillRect(x, 480, 20, 20);
+const drawRect = () => {
+    context.fillStyle = '#b9c681';
+    for (let y = 0; y < canvasHeight / rectHeight; y += 1) {
+        if (y % 2 === 0) {
+            for (let x = 0; x < canvasWidth / rectWidth; x += 2) {
+                context.fillRect(x * rectWidth, y * rectHeight, rectWidth, rectHeight);
+            }
+        } else {
+            for (let x = 1; x < (canvasWidth / rectWidth) - 1; x += 2) {
+                context.fillRect(x * rectWidth, y * rectHeight, rectWidth, rectHeight);
+            }
+        }
+    }
 }
-
-for (let y = 0; y < 500; y += 20) {
-    context.moveTo(0, y);
-    context.lineTo(500, y);
-    context.fillStyle = '#716241';
-    context.fillRect(0, y, 20, 20);
-    context.fillRect(480, y, 20, 20);
-}
-
-context.strokeStyle = '#e6ffe1';
-context.stroke();
+drawRect();
