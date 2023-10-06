@@ -22,3 +22,21 @@ const drawRect = () => {
     }
 }
 drawRect();
+
+// Draw snake
+let snake = [];
+snake[0] = {
+    x: Math.floor((canvasWidth / rectWidth) / 2) * rectWidth,
+    y: Math.floor((canvasHeight / rectHeight) / 2) * rectHeight
+};
+
+function drawSnake() {
+    for (let i = 0; i < snake.length; i++) {
+        context.fillStyle = '#8cb6c0';
+        context.fillRect(snake[i].x, snake[i].y, rectWidth, rectHeight);
+        context.fillStyle = '#f3d495';
+    }
+    context.fillRect(snake[0].x + 3, snake[0].y + 3, 4, 4);
+    context.fillRect(snake[0].x + 13, snake[0].y + 3, 4, 4);
+}
+drawSnake();
