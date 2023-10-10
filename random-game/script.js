@@ -23,7 +23,19 @@ const drawRect = () => {
         }
     }
 }
-drawRect();
+
+// Generate and draw food
+let food = {
+    x: Math.floor(Math.random() * ((canvasWidth - rectWidth) / rectWidth) + 1) * rectWidth,
+    y: Math.floor(Math.random() * ((canvasHeight - rectHeight) / rectHeight) + 1) * rectHeight
+};
+
+function drawFood() {
+    context.beginPath();
+    context.fillStyle = 'red';
+    context.arc(food.x + rectWidth / 2, food.y + rectHeight / 2, rectWidth / 2, 0, 2 * Math.PI);
+    context.fill();
+}
 
 // The direction of the snake by pressing the keys
 document.addEventListener('keydown', function(event) {
@@ -55,8 +67,6 @@ let leftEyeX = 3,
 
 // Draw a new snake head after changing the direction
 function snakeAfterChangeDirection() {
-    snake.pop();
-
     if (dir === 'left') {
         snakeX -= rectWidth;
         eyesDislocation(3, 13, 3, 3)
@@ -73,13 +83,27 @@ function snakeAfterChangeDirection() {
         snakeY += rectWidth;
         eyesDislocation(13, 13, 3, 13)
     } 
+}
 
-    let newSnakeHead = {
+// Increase the length of the snake after eating
+function addNewSnakeElementAfterEating() {
+    if (snakeX === food.x && snakeY === food.y) {
+        food = {
+            x: Math.floor(Math.random() * ((canvasWidth - rectWidth) / rectWidth) + 1) * rectWidth,
+            y: Math.floor(Math.random() * ((canvasHeight - rectHeight) / rectHeight) + 1) * rectHeight
+        };
+    } else {
+        snake.pop();
+    }
+
+    snakeAfterChangeDirection();
+
+    let newSnakeElement = {
         x: snakeX,
         y: snakeY
     };
 
-    snake.unshift(newSnakeHead);
+    snake.unshift(newSnakeElement);
 }
 
 // Changing the location of snake eyes
@@ -98,19 +122,6 @@ function collisionWithWall() {
     if (snakeY === canvasHeight - rectHeight && dir === 'down') snakeY = 0 - rectHeight;
 }
 
-// Generate and draw food
-let food = {
-    x: Math.floor(Math.random() * ((canvasWidth - rectWidth) / rectWidth) + 1) * rectWidth,
-    y: Math.floor(Math.random() * ((canvasHeight - rectHeight) / rectHeight) + 1) * rectHeight
-};
-
-function drawFood() {
-    context.beginPath();
-    context.fillStyle = 'red';
-    context.arc(food.x + rectWidth / 2, food.y + rectHeight / 2, rectWidth / 2, 0, 2 * Math.PI);
-    context.fill();
-}
-
 function drawGame() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     drawRect();
@@ -124,7 +135,7 @@ function drawGame() {
     context.fillRect(snakeX + leftEyeX, snakeY + leftEyeY, 4, 4);
     context.fillRect(snakeX + rightEyeX, snakeY + rightEyeY, 4, 4);
 
-    snakeAfterChangeDirection();
+    addNewSnakeElementAfterEating();
     collisionWithWall();
 }
 drawGame();
