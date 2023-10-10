@@ -45,6 +45,9 @@ snake[0] = {
     y: Math.floor((canvasHeight / rectHeight) / 2) * rectHeight
 };
 
+let snakeX = snake[0].x;
+let snakeY = snake[0].y;
+
 let leftEyeX = 3, 
     leftEyeY = 3,
     rightEyeX = 13,
@@ -58,47 +61,33 @@ function drawSnake() {
         context.fillRect(snake[i].x, snake[i].y, rectWidth, rectHeight);
     }
     context.fillStyle = '#f3d495';
-    context.fillRect(snake[0].x + leftEyeX, snake[0].y + leftEyeY, 4, 4);
-    context.fillRect(snake[0].x + rightEyeX, snake[0].y + rightEyeY, 4, 4);
+    context.fillRect(snakeX + leftEyeX, snakeY + leftEyeY, 4, 4);
+    context.fillRect(snakeX + rightEyeX, snakeY + rightEyeY, 4, 4);
 
     snakeAfterChangeDirection();
+    collisionWithWall();
 }
 drawSnake();
 
 // Draw a new snake head after changing the direction
 function snakeAfterChangeDirection() {
-    let snakeX = snake[0].x;
-    let snakeY = snake[0].y;
-
     snake.pop();
 
     if (dir === 'left') {
         snakeX -= rectWidth;
-        leftEyeX = 3;
-        leftEyeY = 13;
-        rightEyeX = 3;
-        rightEyeY = 3;
+        eyesDislocation(3, 13, 3, 3)
     }
     if (dir === 'up') {
         snakeY -= rectWidth;
-        leftEyeX = 3;
-        leftEyeY = 3;
-        rightEyeX = 13;
-        rightEyeY = 3;
+        eyesDislocation(3, 3, 13, 3)
     } 
     if (dir === 'right') {
         snakeX += rectWidth;
-        leftEyeX = 13;
-        leftEyeY = 3;
-        rightEyeX = 13;
-        rightEyeY = 13;
+        eyesDislocation(13, 3, 13, 13)
     } 
     if (dir === 'down') {
         snakeY += rectWidth;
-        leftEyeX = 13;
-        leftEyeY = 13;
-        rightEyeX = 3;
-        rightEyeY = 13;
+        eyesDislocation(13, 13, 3, 13)
     } 
 
     let newSnakeHead = {
@@ -107,6 +96,22 @@ function snakeAfterChangeDirection() {
     };
 
     snake.unshift(newSnakeHead);
+}
+
+// Changing the location of snake eyes
+function eyesDislocation(lefX, lefY, riX, riY) {
+    leftEyeX = lefX;
+    leftEyeY = lefY;
+    rightEyeX = riX;
+    rightEyeY = riY;
+}
+
+// Collision with a wall
+function collisionWithWall() {
+    if (snakeX === 0 && dir === 'left') snakeX = canvasWidth;
+    if (snakeX === canvasWidth - rectWidth && dir === 'right') snakeX = 0 - rectWidth;
+    if (snakeY === 0 && dir === 'up') snakeY = canvasHeight;
+    if (snakeY === canvasHeight - rectHeight && dir === 'down') snakeY = 0 - rectHeight;
 }
 
 let gameInterval = setInterval(drawSnake, 100);
