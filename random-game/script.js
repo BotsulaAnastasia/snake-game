@@ -50,7 +50,7 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
-// Draw snake
+// Generate snake
 let snake = [];
 snake[0] = {
     x: Math.floor((canvasWidth / rectWidth) / 2) * rectWidth,
@@ -116,10 +116,10 @@ function eyesDislocation(lefX, lefY, riX, riY) {
 
 // Collision with a wall
 function collisionWithWall() {
-    if (snakeX === 0 && dir === 'left') snakeX = canvasWidth;
-    if (snakeX === canvasWidth - rectWidth && dir === 'right') snakeX = 0 - rectWidth;
-    if (snakeY === 0 && dir === 'up') snakeY = canvasHeight;
-    if (snakeY === canvasHeight - rectHeight && dir === 'down') snakeY = 0 - rectHeight;
+    if (snakeX < 0 && dir === 'left') snakeX = canvasWidth;
+    if (snakeX > canvasWidth - rectWidth && dir === 'right') snakeX = 0 - rectWidth;
+    if (snakeY < 0 && dir === 'up') snakeY = canvasHeight;
+    if (snakeY > canvasHeight - rectHeight && dir === 'down') snakeY = 0 - rectHeight;
 }
 
 function drawGame() {
@@ -135,8 +135,8 @@ function drawGame() {
     context.fillRect(snakeX + leftEyeX, snakeY + leftEyeY, 4, 4);
     context.fillRect(snakeX + rightEyeX, snakeY + rightEyeY, 4, 4);
 
-    addNewSnakeElementAfterEating();
     collisionWithWall();
+    addNewSnakeElementAfterEating();
 }
 drawGame();
 
