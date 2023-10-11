@@ -1,3 +1,4 @@
+let scoreDom = document.getElementById('score');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
@@ -6,6 +7,7 @@ const canvasHeight = canvas.height;
 const rectWidth = 20;
 const rectHeight = 20;
 
+let score = 0;
 let dir;
 
 // Draw a grid on the field
@@ -88,6 +90,7 @@ function snakeAfterChangeDirection() {
 // Increase the length of the snake after eating
 function addNewSnakeElementAfterEating() {
     if (snakeX === food.x && snakeY === food.y) {
+        incrementScore();
         food = {
             x: Math.floor(Math.random() * ((canvasWidth - rectWidth) / rectWidth) + 1) * rectWidth,
             y: Math.floor(Math.random() * ((canvasHeight - rectHeight) / rectHeight) + 1) * rectHeight
@@ -123,6 +126,12 @@ function collisionWithWall() {
     if (snakeY >= canvasHeight - rectHeight && dir === 'down') snakeY = 0 - rectHeight;
 }
 
+// Increment score
+function incrementScore() {
+    score++;
+    scoreDom.innerText = score.toString().padStart(2, "0");
+}
+
 function drawGame() {
     context.clearRect(0, 0, canvasWidth, canvasHeight);
     drawRect();
@@ -138,6 +147,14 @@ function drawGame() {
 
     addNewSnakeElementAfterEating();
 }
-drawGame();
+
+// Start the game by clicking on the button
+let startBtn = document.querySelector('.btn');
+startBtn.addEventListener('click', startGame);
+
+function startGame() {
+    dir = 'up';
+    addNewSnakeElementAfterEating();
+}
 
 let gameInterval = setInterval(drawGame, 100);

@@ -4,10 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snake game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <main class="main">
+        <div class="interface-wrapper">
+            <div class="score">
+                <h2>Score: <span id="score">00</span></h2>
+            </div>
+            <button class="btn">Start</button>
+        </div>
         <div class="canvas-wrapper">
             <canvas id="canvas" width="500" height="500"></canvas>
         </div>
