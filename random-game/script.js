@@ -96,6 +96,7 @@ function addNewSnakeElementAfterEating() {
         snake.pop();
     }
 
+    collisionWithWall();
     snakeAfterChangeDirection();
 
     let newSnakeElement = {
@@ -116,10 +117,10 @@ function eyesDislocation(lefX, lefY, riX, riY) {
 
 // Collision with a wall
 function collisionWithWall() {
-    if (snakeX < 0 && dir === 'left') snakeX = canvasWidth;
-    if (snakeX > canvasWidth - rectWidth && dir === 'right') snakeX = 0 - rectWidth;
-    if (snakeY < 0 && dir === 'up') snakeY = canvasHeight;
-    if (snakeY > canvasHeight - rectHeight && dir === 'down') snakeY = 0 - rectHeight;
+    if (snakeX <= 0 && dir === 'left') snakeX = canvasWidth;
+    if (snakeX >= canvasWidth - rectWidth && dir === 'right') snakeX = 0 - rectWidth;
+    if (snakeY <= 0 && dir === 'up') snakeY = canvasHeight;
+    if (snakeY >= canvasHeight - rectHeight && dir === 'down') snakeY = 0 - rectHeight;
 }
 
 function drawGame() {
@@ -135,7 +136,6 @@ function drawGame() {
     context.fillRect(snakeX + leftEyeX, snakeY + leftEyeY, 4, 4);
     context.fillRect(snakeX + rightEyeX, snakeY + rightEyeY, 4, 4);
 
-    collisionWithWall();
     addNewSnakeElementAfterEating();
 }
 drawGame();
