@@ -88,7 +88,7 @@ function snakeAfterChangeDirection() {
 }
 
 // Increase the length of the snake after eating
-function addNewSnakeElementAfterEating() {
+function addNewSnakeElement() {
     if (snakeX === food.x && snakeY === food.y) {
         incrementScore();
         food = {
@@ -141,11 +141,13 @@ function drawGame() {
         context.fillStyle = '#8cb6c0';
         context.fillRect(snake[i].x, snake[i].y, rectWidth, rectHeight);
     }
-    context.fillStyle = '#f3d495';
-    context.fillRect(snakeX + leftEyeX, snakeY + leftEyeY, 4, 4);
-    context.fillRect(snakeX + rightEyeX, snakeY + rightEyeY, 4, 4);
+    if (snake.length !== 0) {
+        context.fillStyle = '#f3d495';
+        context.fillRect(snakeX + leftEyeX, snakeY + leftEyeY, 4, 4);
+        context.fillRect(snakeX + rightEyeX, snakeY + rightEyeY, 4, 4);
+    }
 
-    addNewSnakeElementAfterEating();
+    addNewSnakeElement();
 }
 
 // Start the game by clicking on the button
@@ -153,8 +155,16 @@ let startBtn = document.querySelector('.btn');
 startBtn.addEventListener('click', startGame);
 
 function startGame() {
+    score = 0;
+    scoreDom.innerText = '00';
+    snake.length = 0;
+    snakeX = Math.floor((canvasWidth / rectWidth) / 2) * rectWidth;
+    snakeY = Math.floor((canvasHeight / rectHeight) / 2) * rectHeight;
     dir = 'up';
-    addNewSnakeElementAfterEating();
+    food = {
+        x: Math.floor(Math.random() * ((canvasWidth - rectWidth) / rectWidth) + 1) * rectWidth,
+        y: Math.floor(Math.random() * ((canvasHeight - rectHeight) / rectHeight) + 1) * rectHeight
+    };
 }
 
 let gameInterval = setInterval(drawGame, 100);
