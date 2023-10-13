@@ -11,20 +11,33 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    color: #716241;
 }
 
 .main {
     display: flex;
     justify-content: center;
-    flex-direction: column;
     min-height: calc(100vh - 60px);
+}
+
+.rules {
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .interface-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: #716241;
 }
 
 .score {
@@ -46,16 +59,16 @@ body {
 
     --notchSize: 6px; 
     clip-path:
-        polygon(
-        0% var(--notchSize), 
-        var(--notchSize) 0%, 
-        calc(100% - var(--notchSize)) 0%, 
-        100% var(--notchSize), 
-        100% calc(100% - var(--notchSize)), 
-        calc(100% - var(--notchSize)) 100%, 
-        var(--notchSize) 100%, 
-        0% calc(100% - var(--notchSize))
-        );
+    polygon(
+    0% var(--notchSize), 
+    var(--notchSize) 0%, 
+    calc(100% - var(--notchSize)) 0%, 
+    100% var(--notchSize), 
+    100% calc(100% - var(--notchSize)), 
+    calc(100% - var(--notchSize)) 100%, 
+    var(--notchSize) 100%, 
+    0% calc(100% - var(--notchSize))
+    );
 }
 
 .btn:hover {

@@ -11,14 +11,25 @@
 </head>
 <body>
     <main class="main">
-        <div class="interface-wrapper">
-            <div class="score">
-                <h2>Score: <span id="score-counter">00</span></h2>
+        <div class="game-wrapper">
+            <div class="interface-wrapper">
+                <div class="score">
+                    <h2>Score: <span id="score-counter">00</span></h2>
+                </div>
+                <button class="btn">Start</button>
             </div>
-            <button class="btn">Start</button>
+            <div class="canvas-wrapper">
+                <canvas id="canvas" width="500" height="500"></canvas>
+            </div>
         </div>
-        <div class="canvas-wrapper">
-            <canvas id="canvas" width="500" height="500"></canvas>
+        <div class="rules">
+            <ul type="square">
+                <li>Feed the snake</li>
+                <li>Use keyboard arrows</li>
+                <li>Don't eat yourself</li>
+                <li>Friendly walls</li>
+                <li>Travelling backwards is impossible</li>
+            </ul>
         </div>
     </main>
     <footer class="footer">
