@@ -1,4 +1,5 @@
-let scoreDom = document.getElementById('score');
+let scoreDom = document.getElementById('score-counter');
+let gameOverInfo = document.querySelector('.game-over-wrapper');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
@@ -148,6 +149,7 @@ function drawGame() {
     }
 
     addNewSnakeElement();
+    eatTail();
 }
 
 // Start the game by clicking on the button
@@ -165,6 +167,21 @@ function startGame() {
         x: Math.floor(Math.random() * ((canvasWidth - rectWidth) / rectWidth) + 1) * rectWidth,
         y: Math.floor(Math.random() * ((canvasHeight - rectHeight) / rectHeight) + 1) * rectHeight
     };
+    if (gameInterval === null) gameInterval = setInterval(drawGame, 100);
+    gameOverInfo.classList.remove('--active');
+}
+
+// Game over
+let scoreInfoDom = document.getElementById('score-info');
+function eatTail() {
+    for (let i = 1; i < snake.length; i++) {
+        if (snakeX === snake[i].x && snakeY === snake[i].y) {
+            clearInterval(gameInterval);
+            gameInterval = null;
+            scoreInfoDom.innerText = score.toString().padStart(2, "0");
+            gameOverInfo.classList.toggle('--active');
+        }
+    }
 }
 
 let gameInterval = setInterval(drawGame, 100);
