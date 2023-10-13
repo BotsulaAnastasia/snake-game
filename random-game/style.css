@@ -10,6 +10,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .main {
@@ -68,6 +69,42 @@ body {
 canvas {
     background-color: #c3d08b;
     border: 15px solid #716241;
+}
+
+.footer {
+    width: 100%;
+}
+ 
+.footer-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 530px;
+    height: 60px;
+    margin: auto;
+    padding: 10px 0;
+}
+ 
+.footer-wrapper div:nth-child(2) {
+    margin-right: 50px;
+}
+ 
+.link {
+    width: 90px;
+    height: 100%;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+}
+ 
+.link:last-child {
+    width: 40px;
+}
+ 
+.link a {
+    display: flex;
+    height: 100%;
+    
 }
 
 .game-over-wrapper {
