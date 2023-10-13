@@ -10,6 +10,7 @@ const rectHeight = 20;
 
 let score = 0;
 let dir;
+let startGameIndicator = false;
 
 // Draw a grid on the field
 const drawRect = () => {
@@ -44,13 +45,18 @@ function drawFood() {
 document.addEventListener('keydown', function(event) {
     if(event.code === 'ArrowLeft' && dir !== 'right') {
         dir = 'left';
+        startGameIndicator = true;
     } else if(event.code === 'ArrowUp' && dir !== 'down') {
         dir = 'up';
+        startGameIndicator = true;
     } else if(event.code === 'ArrowRight' && dir !== 'left') {
         dir = 'right';
+        startGameIndicator = true;
     } else if(event.code === 'ArrowDown' && dir !== 'up') {
         dir = 'down';
+        startGameIndicator = true;
     }
+    if (startGameIndicator === true) startBtn.innerText = 'Restart';
 });
 
 // Generate snake
@@ -169,6 +175,7 @@ function startGame() {
     };
     if (gameInterval === null) gameInterval = setInterval(drawGame, 100);
     gameOverInfo.classList.remove('--active');
+    startBtn.innerText = 'Restart';
 }
 
 // Game over
