@@ -134,9 +134,11 @@ function collisionWithWall() {
 }
 
 // Increment score
+let scoreString;
 function incrementScore() {
     score++;
-    scoreDom.innerText = score.toString().padStart(2, "0");
+    scoreString = score.toString().padStart(2, "0");
+    scoreDom.innerText = scoreString;
 }
 
 function drawGame() {
@@ -179,16 +181,42 @@ function startGame() {
 }
 
 // Game over
+let results = JSON.parse(localStorage.getItem("snakeGameResults")) || [];
 let scoreInfoDom = document.getElementById('score-info');
 function eatTail() {
     for (let i = 1; i < snake.length; i++) {
         if (snakeX === snake[i].x && snakeY === snake[i].y) {
             clearInterval(gameInterval);
             gameInterval = null;
-            scoreInfoDom.innerText = score.toString().padStart(2, "0");
+            scoreInfoDom.innerText = scoreString;
             gameOverInfo.classList.toggle('--active');
+
+            saveResultsToLocalStorage();
+            loadResultsFromLocalStorage();
         }
     }
+}
+
+// Load results from Local Storage
+function loadResultsFromLocalStorage() {
+    const scoreTable = document.querySelector(".score-table");
+    scoreTable.innerHTML = "";
+    results.forEach((result, i) => {
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `<span>${i + 1}.</span> ${result}`;
+      scoreTable.appendChild(listItem);
+    });
+}
+  
+// Save results to Local Storage
+function saveResultsToLocalStorage() {
+    results.unshift(scoreString);
+
+    if (results.length > 10) {
+      results.pop();
+    }
+  
+    localStorage.setItem("snakeGameResults", JSON.stringify(results));
 }
 
 let gameInterval = setInterval(drawGame, 100);
