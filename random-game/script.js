@@ -1,6 +1,7 @@
 let scoreDom = document.getElementById('score-counter');
 let gameOverInfo = document.querySelector('.game-over-wrapper');
 const playPauseBtn = document.querySelector('.play-pause-btn');
+const clearBtn = document.querySelector('.clear-btn');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
@@ -60,10 +61,8 @@ document.addEventListener('keydown', function(event) {
         dir = 'down';
         startGameIndicator = true;
     }
-    if (startGameIndicator === true) {
-        startBtn.innerText = 'Restart';
-        playPauseBtn.removeAttribute('disabled');
-    } 
+    if (startGameIndicator === true) startBtn.innerText = 'Restart';
+
     if (paused === true) {
         continueGame();
         paused = false;
@@ -89,19 +88,23 @@ let leftEyeX = 3,
 function snakeAfterChangeDirection() {
     if (dir === 'left') {
         snakeX -= rectWidth;
-        eyesDislocation(3, 13, 3, 3)
+        eyesDislocation(3, 13, 3, 3);
+        playPauseBtn.removeAttribute('disabled');
     }
     if (dir === 'up') {
         snakeY -= rectWidth;
-        eyesDislocation(3, 3, 13, 3)
+        eyesDislocation(3, 3, 13, 3);
+        playPauseBtn.removeAttribute('disabled');
     } 
     if (dir === 'right') {
         snakeX += rectWidth;
-        eyesDislocation(13, 3, 13, 13)
+        eyesDislocation(13, 3, 13, 13);
+        playPauseBtn.removeAttribute('disabled');
     } 
     if (dir === 'down') {
         snakeY += rectWidth;
-        eyesDislocation(13, 13, 3, 13)
+        eyesDislocation(13, 13, 3, 13);
+        playPauseBtn.removeAttribute('disabled');
     }
 }
 
@@ -167,6 +170,7 @@ function drawGame() {
         context.fillRect(snakeX + rightEyeX, snakeY + rightEyeY, 4, 4);
     }
 
+    loadResultsFromLocalStorage();
     addNewSnakeElement();
     eatTail();
 }
@@ -226,16 +230,21 @@ let scoreInfoDom = document.getElementById('score-info');
 function eatTail() {
     for (let i = 1; i < snake.length; i++) {
         if (snakeX === snake[i].x && snakeY === snake[i].y) {
-            clearInterval(gameInterval);
-            gameInterval = null;
-            scoreInfoDom.innerText = scoreString;
-            gameOverInfo.classList.toggle('--active');
-            playPauseBtn.setAttribute('disabled', true);
-
-            saveResultsToLocalStorage();
-            loadResultsFromLocalStorage();
+            gameOver();
         }
     }
+}
+
+function gameOver() {
+    startGameIndicator = false;
+    clearInterval(gameInterval);
+    gameInterval = null;
+    scoreInfoDom.innerText = scoreString;
+    gameOverInfo.classList.toggle('--active');
+    playPauseBtn.setAttribute('disabled', true);
+
+    saveResultsToLocalStorage();
+    loadResultsFromLocalStorage();
 }
 
 // Load results from Local Storage
@@ -247,6 +256,11 @@ function loadResultsFromLocalStorage() {
       listItem.innerHTML = `<span>${i + 1}.</span> ${result}`;
       scoreTable.appendChild(listItem);
     });
+    if (results.length > 0) {
+        clearBtn.classList.add('--activeBtn');
+    } else {
+        clearBtn.classList.remove('--activeBtn');
+    }
 }
   
 // Save results to Local Storage
@@ -259,3 +273,10 @@ function saveResultsToLocalStorage() {
   
     localStorage.setItem("snakeGameResults", JSON.stringify(results));
 }
+
+// Clear scores history
+clearBtn.addEventListener('click', () => {
+    results.length = 0;
+    localStorage.clear();
+    loadResultsFromLocalStorage();
+})
