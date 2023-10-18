@@ -1,5 +1,6 @@
 let scoreDom = document.getElementById('score-counter');
 let gameOverInfo = document.querySelector('.game-over-wrapper');
+const playPauseBtn = document.querySelector('.play-pause-btn');
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
 
@@ -11,6 +12,9 @@ const rectHeight = 20;
 let score = 0;
 let dir;
 let startGameIndicator = false;
+let paused = false;
+
+let gameInterval = setInterval(drawGame, 100);
 
 // Draw a grid on the field
 const drawRect = () => {
@@ -56,7 +60,14 @@ document.addEventListener('keydown', function(event) {
         dir = 'down';
         startGameIndicator = true;
     }
-    if (startGameIndicator === true) startBtn.innerText = 'Restart';
+    if (startGameIndicator === true) {
+        startBtn.innerText = 'Restart';
+        playPauseBtn.removeAttribute('disabled');
+    } 
+    if (paused === true) {
+        continueGame();
+        paused = false;
+    }
 });
 
 // Generate snake
@@ -91,7 +102,7 @@ function snakeAfterChangeDirection() {
     if (dir === 'down') {
         snakeY += rectWidth;
         eyesDislocation(13, 13, 3, 13)
-    } 
+    }
 }
 
 // Increase the length of the snake after eating
@@ -161,7 +172,7 @@ function drawGame() {
 }
 
 // Start the game by clicking on the button
-let startBtn = document.querySelector('.btn');
+let startBtn = document.querySelector('.start-btn');
 startBtn.addEventListener('click', startGame);
 
 function startGame() {
@@ -178,7 +189,36 @@ function startGame() {
     if (gameInterval === null) gameInterval = setInterval(drawGame, 100);
     gameOverInfo.classList.remove('--active');
     startBtn.innerText = 'Restart';
+    playPauseBtn.removeAttribute('disabled');
+    if (paused === true) {
+        continueGame();
+        paused = false;
+    }
 }
+
+// Pause game
+function pauseGame() {
+    clearInterval(gameInterval);
+    playPauseBtn.classList.add('--play');
+    paused = true;
+}
+
+// Continue game
+function continueGame() {
+    gameInterval = setInterval(drawGame, 100);
+    playPauseBtn.classList.remove('--play');
+    paused = false;
+}
+
+playPauseBtn.addEventListener('click', () => {
+    if (playPauseBtn.classList.contains('--play')) {
+        continueGame();
+    } else {
+        pauseGame();
+    }
+});
+
+playPauseBtn.setAttribute('disabled', true);
 
 // Game over
 let results = JSON.parse(localStorage.getItem("snakeGameResults")) || [];
@@ -190,6 +230,7 @@ function eatTail() {
             gameInterval = null;
             scoreInfoDom.innerText = scoreString;
             gameOverInfo.classList.toggle('--active');
+            playPauseBtn.setAttribute('disabled', true);
 
             saveResultsToLocalStorage();
             loadResultsFromLocalStorage();
@@ -218,5 +259,3 @@ function saveResultsToLocalStorage() {
   
     localStorage.setItem("snakeGameResults", JSON.stringify(results));
 }
-
-let gameInterval = setInterval(drawGame, 100);
