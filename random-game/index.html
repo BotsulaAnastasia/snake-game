@@ -14,7 +14,9 @@
     <main class="main">
         <div class="score-table-wrapper">
             <h3>Scores history</h3>
-            <div class="score-table"></div>
+            <div class="score-table-wrapper">
+                <ul class="score-table" type="square"></ul>
+            </div>
             <button class="btn clear-btn">Clear record</button>
         </div>
         <div class="game-wrapper">
@@ -29,6 +31,10 @@
             </div>
             <div class="canvas-wrapper">
                 <canvas id="canvas" width="500" height="500"></canvas>
+            </div>
+            <div class="hide-buttons">
+                <button class="history-btn"></button>
+                <button class="rules-btn">?</button>
             </div>
         </div>
         <div class="rules">

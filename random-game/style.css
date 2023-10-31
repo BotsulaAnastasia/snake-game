@@ -34,7 +34,7 @@ body {
     justify-content: center;
 }
 
-.interface-wrapper {
+.interface-wrapper, .hide-buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -85,7 +85,7 @@ body {
     border: 3px solid #716241;
 }
 
-.play-pause-btn {
+.play-pause-btn, .history-btn, .rules-btn {
     background-image: url(./icons/pause.svg);
     background-size: 100%;
     width: 30px;
@@ -98,20 +98,6 @@ body {
 
 .--play {
     background-image: url(./icons/play.svg);
-}
-
-.play-pause-btn:active:not([disabled="true"]) {
-    box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, 0.25);
-}
-
-@media (min-width: 769px) {   
-    .btn:hover {
-        color: #716241;
-    }
-    .play-pause-btn:hover:not([disabled="true"]) {
-        cursor: pointer;  
-        background-color: #f3d495;
-    }
 }
 
 canvas {
@@ -184,7 +170,7 @@ canvas {
 
 .score-table {
     width: 232px;
-    padding: 10px 50px 10px 70px;
+    padding: 10px 0 10px 95px;
 }
 
 h3 {
@@ -202,4 +188,52 @@ h3 {
 
 .--activeBtn {
     display: inline;
+}
+
+.hide-buttons {
+    display: none;
+    margin-top: 5px;
+}
+
+.history-btn {
+    background-image: url(./icons/history.svg);
+    border-radius: 10%;
+    border: 3px solid #716241;
+}
+
+.rules-btn {
+    background-image: none;
+    font-size: 20px;
+    font-weight: 600;
+    border: 3px solid #716241;
+}
+
+@media (max-width: 1010px) {
+    .rules, .score-table-wrapper{
+        display: none;
+    }
+    .hide-buttons {
+        display: flex;
+    }
+    .game-over-wrapper {
+        transform: translate(-50%, -70%);
+    }
+}
+
+@media (min-width: 769px) {   
+    .btn:hover {
+        color: #716241;
+    }
+    .play-pause-btn:hover:not([disabled="true"]), .history-btn:hover, .rules-btn:hover{
+        cursor: pointer;  
+        background-color: #f3d495;
+    }
+
+    .play-pause-btn:active:not([disabled="true"]), .history-btn:active, .rules-btn:active{
+        box-shadow: inset 0 0 5px 5px rgba(0, 0, 0, 0.25);
+    }
+
+    .history-btn:active, .rules-btn:active{
+        box-shadow: inset 0 0 3px 3px rgba(0, 0, 0, 0.25);
+    }
 }
