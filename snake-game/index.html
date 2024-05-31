@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake game</title>
+    <link rel="icon" href="./icons/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <main class="main">
+        <div class="score-table-wrapper">
+            <h3>Scores history</h3>
+            <div class="score-table-wrapper">
+                <ul class="score-table" type="square"></ul>
+            </div>
+            <button class="btn clear-btn">Clear record</button>
+        </div>
+        <div class="game-wrapper">
+            <div class="interface-wrapper">
+                <div class="score">
+                    <h2>Score: <span id="score-counter">00</span></h2>
+                </div>
+                <div class="buttons-wrapper">
+                    <button class="play-pause-btn"></button>
+                    <button class="btn start-btn">Start</button>
+                </div>
+            </div>
+            <div class="canvas-wrapper">
+                <canvas id="canvas" width="500" height="500"></canvas>
+            </div>
+            <div class="hide-buttons">
+                <button class="history-btn"></button>
+                <button class="rules-btn">?</button>
+            </div>
+        </div>
+        <div class="rules">
+            <ul type="square">
+                <li>Feed the snake</li>
+                <li>Use keyboard arrows</li>
+                <li>Don't eat yourself</li>
+                <li>Friendly walls</li>
+                <li>Travelling backwards<br>is impossible</li>
+            </ul>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="footer-wrapper">
+            <div class="link">
+                <a href="https://rs.school/js-stage0/" target="_blank">
+                    <img src="./icons/rs_school_js.svg" alt="rs_school_icon">
+                </a>
+            </div>
+            <div>2023</div>
+            <div class="link">
+                <a href="https://github.com/BotsulaAnastasia" target="_blank">
+                    <img src="./icons/github.png" alt="github_icon">
+                </a>
+            </div>
+        </div>
+    </footer>
+    <div class="game-over-wrapper">
+        <h1 class="game-over-title">Game Over</h1>
+        <h2>Score: <span id="score-info">00</span></h2>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
